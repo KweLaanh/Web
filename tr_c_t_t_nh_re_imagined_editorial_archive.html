@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Trúc Tơ Tình — Editorial OC Archive</title>
+  
+  <!-- Google Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  
+  <style>
+    /* CSS Custom Properties & Core Color Palette */
+    :root {
+      --g1: #0D261E; /* Deep Forest Jade */
+      --g2: #193E32; /* Rich Pine */
+      --g3: #3B5E4B; /* Muted Bamboo Green */
+      --mist: #C5D4BD; /* Bamboo Mist */
+      --red: #B82929; /* Vermilion Wish Tag Red */
+      --lac: #7A171B; /* Dark Lacquer Crimson */
+      --ivory: #F5EFEB; /* Archival Parchment Ivory */
+      --paper: #E6DCB8; /* Antique Paper */
+      --paper-dark: #313328; 
+      --ink: #1B211C; /* Ink Black */
+      --gold: #C2A15D; /* Foil Gold */
+      --gold-dark: #8C6D2E;
+      --bg: var(--ivory);
+      --fg: var(--ink);
+      --mut: #5D6B5E;
+      --line: #D0C3A9;
+      --shadow-lac: rgba(122, 23, 27, 0.25);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0A1B15;
+      --fg: var(--ivory);
+      --mut: #96A896;
+      --line: #1F3B30;
+      --paper: #142B23;
+      --ink: var(--ivory);
+    }
+
+    /* Core Resets & Global Styles */
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; background-color: var(--bg); color: var(--fg); font-family: 'Be Vietnam Pro', sans-serif; -webkit-font-smoothing: antialiased; }
+
+    /* Typography Classes */
+    .font-cormorant { font-family: 'Cormorant Garamond', Georgia, serif; }
+    .font-lora { font-family: 'Lora', Georgia, serif; }
+    .font-sans { font-family: 'Be Vietnam Pro', sans-serif; }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--g3); border-radius: 3px; }
+
+    /* Vertical Text Helpers */
+    .vertical-rl { writing-mode: vertical-rl; text-orientation: mixed; }
+    .upright { text-orientation: upright; }
+
+    /* Custom Focus Outline */
+    :focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
+
+    /* Animations */
+    @keyframes sway {
+      0% { transform: rotate(-1.5deg); }
+      100% { transform: rotate(1.5deg); }
+    }
+    @keyframes swing {
+      0% { transform: rotate(0deg); }
+      20% { transform: rotate(-18deg); }
+      50% { transform: rotate(12deg); }
+      75% { transform: rotate(-6deg); }
+      100% { transform: rotate(0deg); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-sway { animation: sway 6s ease-in-out infinite alternate; }
+    .animate-swing { animation: swing 0.9s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards; }
+    .animate-fade-in { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+    /* Paper & Archival Textures */
+    .bg-paper-texture {
+      background-color: var(--bg);
+      background-image: radial-gradient(var(--line) 0.75px, transparent 0.75px);
+      background-size: 16px 16px;
+    }
+
+    /* Red Wish Tag Component */
+    .wish-tag {
+      position: relative;
+      background: linear-gradient(135deg, var(--red) 0%, var(--lac) 100%);
+      color: var(--ivory);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 10px 25px -5px var(--shadow-lac), inset 0 0 15px rgba(0,0,0,0.3);
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 18px), 50% 100%, 0 calc(100% - 18px));
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .wish-tag::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border: 1px dashed rgba(245, 239, 235, 0.35);
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), 50% 100%, 0 calc(100% - 16px));
+      pointer-events: none;
+    }
+
+    /* Bamboo Node Bar (Menu Button Signature) */
+    .bamboo-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: linear-gradient(180deg, #2D5844 0%, #15382B 100%);
+      border: 1px solid var(--gold);
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .bamboo-trigger:hover {
+      transform: translateY(-2deg);
+      border-color: var(--ivory);
+      box-shadow: 0 6px 16px rgba(184, 41, 41, 0.3);
+    }
+    .bamboo-node {
+      width: 4px;
+      height: 14px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+    }
+
+    /* Asymmetric Interactive Strip */
+    .strip-item {
+      position: relative;
+      background-color: transparent;
+      border-bottom: 1px solid var(--line);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .strip-item:hover {
+      background-color: rgba(184, 41, 41, 0.04);
+      padding-left: 12px;
+    }
+    .strip-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background-color: var(--red);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .strip-item:hover::before { opacity: 1; }
+
+    /* Button Styling */
+    .btn-editorial {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--fg);
+      background: transparent;
+      border: 1px solid var(--line);
+      position: relative;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .btn-editorial:hover {
+      border-color: var(--red);
+      color: var(--red);
+      background: rgba(184, 41, 41, 0.05);
+    }
+    .btn-editorial.btn-fill {
+      background: var(--red);
+      color: var(--ivory);
+      border-color: var(--red);
+    }
+    .btn-editorial.btn-fill:hover {
+      background: var(--lac);
+      border-color: var(--lac);
+      color: var(--ivory);
+    }
+    .btn-editorial.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+      border-style: dashed;
+    }
+
+    /* Character Profile Plaque Layout */
+    .profile-plaque {
+      background: radial-gradient(circle at 50% 0%, #193E32 0%, #0D261E 100%);
+      border: 1px solid var(--gold);
+      outline: 1px solid var(--gold-dark);
+      outline-offset: -8px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+  </style>
+
+  <!-- Tailwind CSS CDN for fluid utility grid structure -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            jade: '#0D261E',
+            pine: '#193E32',
+            vermilion: '#B82929',
+            lacquer: '#7A171B',
+            parchment: '#F5EFEB',
+            gold: '#C2A15D'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-paper-texture flex flex-col min-h-screen selection:bg-vermilion selection:text-white">
+
+  <!-- ==================== GATE / INTRO SCENE ==================== -->
+  <div id="gate" class="fixed inset-0 z-50 flex flex-col justify-between p-6 sm:p-12 overflow-hidden transition-opacity duration-1000 bg-gradient-to-b from-[#0B1E17] via-[#0D261E] to-[#07140F]">
+    
+    <!-- Atmospheric SVG Bamboo Silhouettes -->
+    <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-25" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="#1D4A3A">
+        <rect x="80" width="12" height="1000"/>
+        <rect x="94" width="6" height="1000" opacity="0.5"/>
+        <rect x="320" width="18" height="1000"/>
+        <rect x="740" width="14" height="1000"/>
+        <rect x="890" width="8" height="1000" opacity="0.6"/>
+      </g>
+      <!-- Bamboo Joints -->
+      <g fill="#3B5E4B">
+        <rect x="80" y="200" width="12" height="3"/>
+        <rect x="80" y="550" width="12" height="3"/>
+        <rect x="320" y="300" width="18" height="4"/>
+        <rect x="320" y="700" width="18" height="4"/>
+        <rect x="740" y="150" width="14" height="3"/>
+        <rect x="740" y="600" width="14" height="3"/>
+      </g>
+      <!-- Floating Bamboo Leaves -->
+      <g fill="#2D5844" class="animate-sway">
+        <path d="M92 200 C 160 170, 220 180, 260 210 C 190 220, 130 220, 92 200 Z" />
+        <path d="M338 300 C 250 250, 180 270, 140 310 C 210 310, 280 310, 338 300 Z" />
+        <path d="M754 150 C 830 110, 890 130, 930 160 C 860 170, 800 170, 754 150 Z" />
+      </g>
+    </svg>
+
+    <!-- Top Corner Archival Stamp -->
+    <div class="relative z-10 flex justify-between items-start">
+      <div class="tracking-[0.25em] text-[10px] sm:text-xs uppercase font-sans font-semibold text-gold/80 border-b border-gold/30 pb-1">
+        Lưu Trữ Nhân Vật Gốc · Archival Collection
+      </div>
+      <div class="hidden sm:block text-right font-lora italic text-xs text-mist/60">
+        Phiên bản Tự Sự · 2026
+      </div>
+    </div>
+
+    <!-- Center/Bottom Editorial Intro Title -->
+    <div class="relative z-10 my-auto max-w-3xl">
+      <span class="inline-block text-xs font-semibold tracking-[0.3em] uppercase text-vermilion mb-3 pl-1">
+        — Hồi Ức Trúc Lâm
+      </span>
+      <h1 class="font-cormorant text-5xl sm:text-7xl md:text-8xl font-normal leading-[0.9] tracking-tight text-parchment mb-6">
+        TRÚC TƠ <em class="font-serif italic font-light text-vermilion">TÌNH</em>
+      </h1>
+      <p class="font-lora italic text-base sm:text-xl text-mist/90 max-w-md font-light leading-relaxed">
+        Mỗi cái tên được giữ lại giữa rừng tre, chờ một bàn tay lật mở.
+      </p>
+    </div>
+
+    <!-- Signature Hanging Wish Tag (Interactive Enter Trigger) -->
+    <div class="absolute right-8 sm:right-24 top-0 z-20 flex flex-col items-center">
+      <!-- Hanging Thread -->
+      <div class="w-[1px] h-32 sm:h-48 bg-gradient-to-b from-vermilion via-vermilion to-lacquer"></div>
+      
+      <!-- Interactive Tag Button -->
+      <div id="tw" class="animate-sway origin-top cursor-pointer group">
+        <button id="enter" class="wish-tag w-16 sm:w-20 py-6 px-2 flex flex-col items-center gap-4 text-center transition-transform group-hover:scale-105" aria-label="Bước vào">
+          <!-- Circular Seal -->
+          <div class="w-7 h-7 rounded-full border border-parchment/60 flex items-center justify-center font-lora text-xs font-bold text-parchment bg-lacquer/40">
+            情
+          </div>
+          <!-- Vertical Text -->
+          <span class="vertical-rl font-sans font-bold text-xs sm:text-sm tracking-[0.3em] text-parchment uppercase">
+            BƯỚC VÀO
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Gate Footer Note -->
+    <div class="relative z-10 text-[11px] font-sans text-mist/50 tracking-widest uppercase">
+      Chạm vào thẻ nguyện để mở lối
+    </div>
+  </div>
+
+
+  <!-- ==================== MAIN HEADER / NAVIGATION ==================== -->
+  <header class="sticky top-0 z-40 bg-parchment/90 backdrop-blur-md border-b border-line/60 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <button data-go="home" class="group flex items-center gap-3 text-left">
+        <span class="w-2.5 h-2.5 rounded-full bg-vermilion group-hover:scale-125 transition-transform"></span>
+        <span class="font-cormorant text-2xl font-bold tracking-wider text-jade">
+          TRÚC <span class="text-vermilion font-serif italic">TƠ</span> TÌNH
+        </span>
+      </button>
+
+      <!-- Signature Bamboo Joint Menu Trigger -->
+      <button id="menu" class="bamboo-trigger" aria-label="Mở menu" aria-expanded="false">
+        <span class="bamboo-node"></span>
+        <span class="font-sans font-semibold text-[11px] tracking-[0.2em] uppercase text-parchment pl-1">
+          DANH MỤC
+        </span>
+        <span class="bamboo-node"></span>
+      </button>
+    </div>
+  </header>
+
+
+  <!-- ==================== DRAWER NAVIGATION PANEL ==================== -->
+  <div id="nav-backdrop" class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"></div>
+  
+  <nav id="nav" class="fixed top-0 bottom-0 left-0 z-50 w-full max-w-sm bg-jade text-parchment p-8 sm:p-12 flex flex-col justify-between -translate-x-full transition-transform duration-500 ease-out border-r-2 border-vermilion shadow-2xl" aria-label="Điều hướng chính">
+    
+    <div>
+      <!-- Drawer Header -->
+      <div class="flex items-center justify-between pb-8 border-b border-pine">
+        <span class="text-[10px] font-semibold tracking-[0.3em] uppercase text-gold">
+          LỐI ĐI · DIRECTORY
+        </span>
+        <button id="close" class="text-2xl text-mist hover:text-vermilion transition-colors px-2" aria-label="Đóng">
+          ✕
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="mt-12 flex flex-col gap-6">
+        <button class="nav-it text-left font-cormorant text-3xl sm:text-4xl hover:text-vermilion transition-all duration-300 flex items-center gap-4 group" data-go="home">
+          <span class="w-2 h-2 rounded-full bg-vermilion opacity-0 group-hover:opacity-100 transition-opacity"></span>
+          <span>TRANG CHỦ</span>
+        </button>
+        <button class="nav-it text-left font-cormorant text-3xl sm:text-4xl hover:text-vermilion transition-all duration-300 flex items-center gap-4 group" data-go="discover">
+          <span class="w-2 h-2 rounded-full bg-vermilion opacity-0 group-hover:opacity-100 transition-opacity"></span>
+          <span>KHÁM PHÁ THÊM</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="pt-8 border-t border-pine text-xs text-mist/60 font-lora italic">
+      "Lưu giữ từng mảnh hồn nhân vật giữa rừng tre xanh."
+    </div>
+  </nav>
+
+
+  <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
+  <main id="app" class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-8 py-10 sm:py-16">
+    <!-- Dynamic JS Content renders here -->
+  </main>
+
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="mt-auto border-t border-line/60 py-8 bg-parchment/40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-sans text-mut">
+      <div>
+        © 2026 <strong class="font-semibold text-jade">Trúc Tơ Tình</strong> — Studio-Crafted OC Archive
+      </div>
+      <div class="font-lora italic text-mut/80">
+        Biên khảo mỹ thuật &amp; Thiết kế độc bản
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ==================== MEMORY DIALOG MODAL ==================== -->
+  <dialog id="dlg" class="backdrop:bg-black/70 backdrop:backdrop-blur-sm p-0 rounded-none bg-transparent max-w-lg w-full mx-auto">
+    <div class="bg-parchment border-t-8 border-vermilion p-6 sm:p-8 shadow-2xl text-ink">
+      <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-mut block mb-1">
+        THẺ NGUYỆN MỚI
+      </span>
+      <h3 class="font-cormorant text-3xl font-bold text-jade mb-6">
+        Gửi một hồi ức
+      </h3>
+      
+      <form id="mem-form" onsubmit="return false;" class="space-y-5">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-mut mb-2" for="msel">
+            Dành cho Nhân vật
+          </label>
+          <select id="msel" class="w-full bg-ivory border border-line p-3 font-sans text-sm focus:border-vermilion focus:outline-none">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-mut mb-2" for="mtxt">
+            Nội dung hồi ức
+          </label>
+          <textarea id="mtxt" maxlength="600" rows="5" class="w-full bg-ivory border border-line p-3 font-sans text-sm focus:border-vermilion focus:outline-none leading-relaxed resize-y" placeholder="Một câu thoại, một kỷ niệm, hoặc một lời nhắn gửi..."></textarea>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-line">
+          <button type="button" id="mno" class="btn-editorial">HỦY BỎ</button>
+          <button type="button" id="myes" class="btn-editorial btn-fill">LƯU THẺ NGUYỆN</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+
+  <!-- ==================== APPLICATION LOGIC & DATA ==================== -->
+  <script>
+    /* ===== CHARACTERS DATA PRESERVED ===== */
+    const CHARACTERS = [
+      {
+        id: "diem-giao-hoan",
+        name: "Điềm Giảo Hoan",
+        avatarUrl: "",
+        description: "17 tuổi, lớn lên ở ngôi làng nghèo trọng nam khinh nữ, lên Thành Đô chăm em trai.",
+        quote: "Đời người như ngọn tre cong trước gió, uốn mình chứ không chịu gãy.",
+        hashtags: ["Thành Đô", "Chị gái", "Phong Kiến"],
+        backstoryUrl: "",
+        characterAiUrl: "",
+        details: { "Tuổi": "17", "Xuất thân": "Thành Đô", "Vai trò": "Chị gái" }
+      },
+      {
+        id: "demo-1",
+        demo: true,
+        name: "Mẫu thử Một",
+        avatarUrl: "",
+        description: "Nhân vật mẫu — hãy xóa hoặc cập nhật khi hoàn thiện.",
+        quote: "Tre không nói, chỉ đứng đó qua bao mùa giông bão.",
+        hashtags: ["Mẫu", "Tre", "Ẩn Sĩ"],
+        backstoryUrl: "",
+        characterAiUrl: "",
+        details: { "Thế giới": "Demo Archive" }
+      },
+      {
+        id: "demo-2",
+        demo: true,
+        name: "Mẫu thử Hai",
+        avatarUrl: "",
+        description: "Nhân vật mẫu — dùng để kiểm tra hiển thị hệ thống.",
+        quote: "",
+        hashtags: ["Mẫu", "Ký Ức"],
+        backstoryUrl: "",
+        characterAiUrl: "",
+        details: {}
+      }
+    ];
+
+    /* ===== LOCAL STORAGE & STATE PRESERVED ===== */
+    const STORAGE_KEY = "ttt.v1";
+    let STORE;
+    try {
+      STORE = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch(e) {
+      STORE = {};
+    }
+    STORE.views = STORE.views || {};
+    STORE.mem = STORE.mem || [];
+    STORE.seen = STORE.seen || {};
+
+    const saveStore = () => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      } catch(e) {}
+    };
+
+    /* ===== UTILITY FUNCTIONS ===== */
+    const $ = s => document.querySelector(s);
+    const app = $("#app");
+    const esc = s => String(s??"").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+    const norm = t => t.trim().toLowerCase();
+    const getById = id => CHARACTERS.find(c => c.id === id);
+    const getAllTags = () => [...new Map(CHARACTERS.flatMap(c => c.hashtags).map(t => [norm(t), t.trim()])).values()];
+    const safeUrl = u => {
+      try {
+        const x = new URL(u);
+        return /^https?:$/.test(x.protocol) ? x.href : "";
+      } catch(e) {
+        return "";
+      }
+    };
+
+    /* ===== ROUTING SYSTEM ===== */
+    let route = { p: "home", q: "", tag: "", room: "" };
+    function go(r) {
+      route = Object.assign({ p: "home", q: "", tag: "", room: "" }, r);
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function filterList(q, tag) {
+      const n = norm(q || "");
+      return CHARACTERS.filter(c => 
+        (!n || norm(c.name).includes(n) || c.hashtags.some(t => norm(t).includes(n))) &&
+        (!tag || c.hashtags.some(t => norm(t) === norm(tag)))
+      );
+    }
+
+    /* ===== RENDERING ENGINE ===== */
+    function render() {
+      const r = route;
+      let html = "";
+
+      /* ----- 1. HOME / INDEX SCENE (IMAGE-FREE CONSTRAINT ENFORCED) ----- */
+      if (r.p === "home") {
+        html = `
+          <section class="animate-fade-in">
+            <!-- Asymmetric Editorial Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
+              
+              <!-- Left Column: Vertical Decorative Title & Metadata (Desktop) -->
+              <div class="hidden md:flex md:col-span-3 flex-col items-start border-r border-line/60 pr-8 sticky top-28">
+                <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-gold mb-4">
+                  CHỈ MỤC BẢN VIẾT
+                </span>
+                <div class="vertical-rl font-cormorant italic text-6xl text-g3/40 font-bold tracking-widest my-4">
+                  竹絲情·目錄
+                </div>
+                <p class="text-xs font-lora italic text-mut mt-4 leading-relaxed">
+                  Tổng cộng <strong class="text-vermilion font-sans uppercase font-bold">${CHARACTERS.length}</strong> hồ sơ gốc đang lưu lại.
+                </p>
+              </div>
+
+              <!-- Right Column: Main Content & Search -->
+              <div class="md:col-span-9 space-y-8">
+                <div>
+                  <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-vermilion block mb-2">
+                    — Thư Viện Hồ Sơ
+                  </span>
+                  <h2 class="font-cormorant text-4xl sm:text-5xl font-bold text-jade leading-tight">
+                    Những cái tên đang chờ giữa rừng tre
+                  </h2>
+                </div>
+
+                <!-- Editorial Search Bar -->
+                <div class="relative border-b-2 border-jade focus-within:border-vermilion transition-colors py-2 flex items-center">
+                  <span class="w-2 h-2 rounded-full bg-vermilion mr-3"></span>
+                  <input id="q" type="search" placeholder="Tìm kiếm theo tên nhân vật hoặc thẻ hashtag..." value="${esc(r.q)}" 
+                         class="w-full bg-transparent font-sans text-base text-ink focus:outline-none placeholder:text-mut/60" aria-label="Tìm kiếm nhân vật">
+                </div>
+
+                <!-- List Output Container -->
+                <div id="res" class="space-y-4 pt-4"></div>
+              </div>
+
+            </div>
+          </section>
+        `;
+      }
+
+      /* ----- 2. CHARACTER PROFILE SCENE ----- */
+      else if (r.p === "char") {
+        const c = getById(r.id);
+        if (!c) return go({});
+
+        const imgUrl = safeUrl(c.avatarUrl);
+        const backUrl = safeUrl(c.backstoryUrl);
+        const aiUrl = safeUrl(c.characterAiUrl);
+        const detailsList = Object.entries(c.details || {}).filter(([k, v]) => v);
+        const characterMemories = STORE.mem.filter(m => m.cid === c.id);
+
+        html = `
+          <section class="animate-fade-in max-w-4xl mx-auto">
+            <!-- Back Navigation -->
+            <button class="btn-editorial mb-8 group" data-go="home">
+              <span class="mr-2 group-hover:-translate-x-1 inline-block transition-transform">←</span> TRỞ VỀ CHỈ MỤC
+            </button>
+
+            <!-- Archival Profile Plaque ("Plate") -->
+            <div class="profile-plaque p-6 sm:p-10 rounded-sm text-parchment relative overflow-hidden">
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                
+                <!-- Character Avatar Frame (Shown strictly only inside profile/draw) -->
+                <div class="md:col-span-5 flex justify-center">
+                  <div class="w-full max-w-[260px] aspect-[3/4] border border-gold/60 p-2 bg-jade/80 shadow-2xl relative">
+                    <div class="w-full h-full border border-gold/30 overflow-hidden flex items-center justify-center bg-[#07140F]">
+                      ${imgUrl 
+                        ? `<img src="${esc(imgUrl)}" alt="${esc(c.name)}" class="w-full h-full object-cover" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'p-4 text-center font-lora italic text-xs text-mist/60',textContent:'Không thể tải được hình ảnh'}))">`
+                        : `<div class="p-4 text-center font-lora italic text-xs text-mist/60">Chưa cập nhật chân dung</div>`
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Character Info Header -->
+                <div class="md:col-span-7 space-y-4">
+                  <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-gold block">
+                    HỒ SƠ BẢN THẢO · PROFILE
+                  </span>
+                  <h2 class="font-cormorant text-4xl sm:text-6xl font-bold leading-none text-parchment">
+                    ${esc(c.name)}
+                  </h2>
+                  
+                  ${c.quote ? `
+                    <blockquote class="font-lora italic text-base sm:text-lg text-mist/90 border-l-2 border-vermilion pl-4 py-1 my-4">
+                      “${esc(c.quote)}”
+                    </blockquote>
+                  ` : ''}
+
+                  <!-- Hashtags -->
+                  <div class="flex flex-wrap gap-2 pt-2">
+                    ${c.hashtags.map(t => `
+                      <button class="text-xs font-sans px-3 py-1 border border-mist/30 text-mist hover:border-gold hover:text-gold transition-colors" data-tag="${esc(t.trim())}">
+                        #${esc(t.trim())}
+                      </button>
+                    `).join('')}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Extended Description & Metadata Details -->
+            <div class="mt-8 bg-parchment border border-line p-6 sm:p-8 space-y-6">
+              ${c.description ? `
+                <div>
+                  <h4 class="text-xs font-bold tracking-widest uppercase text-mut mb-2">MÔ TẢ VẮN TẮT</h4>
+                  <p class="font-lora text-base sm:text-lg text-ink leading-relaxed">${esc(c.description)}</p>
+                </div>
+              ` : ''}
+
+              ${detailsList.length ? `
+                <div class="border-t border-line/60 pt-6">
+                  <h4 class="text-xs font-bold tracking-widest uppercase text-mut mb-4">THÔNG TIN CHI TIẾT</h4>
+                  <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    ${detailsList.map(([k, v]) => `
+                      <div class="bg-ivory border border-line/50 p-3">
+                        <span class="block text-[10px] font-bold tracking-wider uppercase text-mut">${esc(k)}</span>
+                        <span class="font-lora font-semibold text-sm text-jade">${esc(v)}</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+
+              <!-- External Action Links -->
+              <div class="border-t border-line/60 pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                ${backUrl 
+                  ? `<a href="${esc(backUrl)}" target="_blank" rel="noopener noreferrer" class="btn-editorial btn-fill text-center">ĐỌC BACKSTORY →</a>`
+                  : `<span class="btn-editorial disabled text-center">BACKSTORY · CHƯA CÓ</span>`
+                }
+                ${aiUrl 
+                  ? `<a href="${esc(aiUrl)}" target="_blank" rel="noopener noreferrer" class="btn-editorial text-center">TRO CHUYỆN CHARACTER AI →</a>`
+                  : `<span class="btn-editorial disabled text-center">CHARACTER AI · CHƯA CÓ</span>`
+                }
+              </div>
+            </div>
+
+            <!-- Character Memories Attachment Section -->
+            <div class="mt-12">
+              <div class="flex justify-between items-center mb-6">
+                <h3 class="font-cormorant text-3xl font-bold text-jade">
+                  Hồi ức đã trao (${characterMemories.length})
+                </h3>
+                <button id="addm-char" class="btn-editorial btn-fill">GỬI HỒI ỨC</button>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                ${characterMemories.map(renderMemoryCard).join('') || `
+                  <p class="col-span-2 font-lora italic text-mut text-center py-8 border border-dashed border-line">
+                    Chưa có thẻ nguyện nào được treo cho nhân vật này.
+                  </p>
+                `}
+              </div>
+            </div>
+
+          </section>
+        `;
+      }
+
+      /* ----- 3. DISCOVER HUB SCENE ("Khám Phá Thêm") ----- */
+      else if (r.p === "discover") {
+        if (!r.room) {
+          html = `
+            <section class="animate-fade-in space-y-8">
+              <div>
+                <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-gold block mb-2">
+                  BỐN GIAN KHU VƯỜN · DISCOVERY HUB
+                </span>
+                <h2 class="font-cormorant text-4xl sm:text-5xl font-bold text-jade">
+                  Khám phá không gian lưu trữ
+                </h2>
+              </div>
+
+              <!-- 4 Architectural Distinct Room Cards -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Room A: Dark Jade -->
+                <button class="room-card group text-left p-8 bg-jade text-parchment border border-gold/40 flex flex-col justify-between min-h-[220px] transition-transform hover:-translate-y-1 shadow-lg" data-room="rand">
+                  <div>
+                    <span class="text-[10px] font-bold tracking-widest uppercase text-gold block mb-2">GIAN THỨ NHẤT</span>
+                    <h3 class="font-cormorant text-3xl font-bold leading-tight">NGẪU NHIÊN HÔM NAY</h3>
+                  </div>
+                  <span class="text-xs font-semibold uppercase tracking-widest text-mist group-hover:text-vermilion transition-colors">
+                    Rút một thẻ nhân vật →
+                  </span>
+                </button>
+
+                <!-- Room B: Ink & Paper with Lacquer Red Border -->
+                <button class="room-card group text-left p-8 bg-paper text-ink border-l-8 border-vermilion border-t border-r border-b border-line flex flex-col justify-between min-h-[220px] transition-transform hover:-translate-y-1 shadow-lg" data-room="rank">
+                  <div>
+                    <span class="text-[10px] font-bold tracking-widest uppercase text-mut block mb-2">GIAN THỨ HAI</span>
+                    <h3 class="font-cormorant text-3xl font-bold leading-tight">DANH VỌNG BẢNG</h3>
+                  </div>
+                  <span class="text-xs font-semibold uppercase tracking-widest text-vermilion">
+                    Sổ lượt xem nhân vật →
+                  </span>
+                </button>
+
+                <!-- Room C: Double-bordered Bamboo Green -->
+                <button class="room-card group text-left p-8 bg-ivory text-ink border-4 border-double border-g3 flex flex-col justify-between min-h-[220px] transition-transform hover:-translate-y-1 shadow-lg" data-room="kind">
+                  <div>
+                    <span class="text-[10px] font-bold tracking-widest uppercase text-g3 block mb-2">GIAN THỨ BA</span>
+                    <h3 class="font-cormorant text-3xl font-bold leading-tight">VẠN LOẠI MỤC</h3>
+                  </div>
+                  <span class="text-xs font-semibold uppercase tracking-widest text-g3 group-hover:text-vermilion transition-colors">
+                    Tra cứu theo hashtag →
+                  </span>
+                </button>
+
+                <!-- Room D: Deep Vermilion Lacquer -->
+                <button class="room-card group text-left p-8 bg-lacquer text-parchment border border-red flex flex-col justify-between min-h-[220px] transition-transform hover:-translate-y-1 shadow-lg" data-room="mem">
+                  <div>
+                    <span class="text-[10px] font-bold tracking-widest uppercase text-gold block mb-2">GIAN THỨ TƯ</span>
+                    <h3 class="font-cormorant text-3xl font-bold leading-tight">TƠ TÌNH KÝ</h3>
+                  </div>
+                  <span class="text-xs font-semibold uppercase tracking-widest text-parchment group-hover:text-gold transition-colors">
+                    Xem &amp; treo thẻ hồi ức →
+                  </span>
+                </button>
+
+              </div>
+            </section>
+          `;
+        } else {
+          /* ROOM SUB-VIEWS */
+          html = `
+            <section class="animate-fade-in space-y-6">
+              <button class="btn-editorial group mb-4" data-go="discover">
+                <span class="mr-2 group-hover:-translate-x-1 inline-block transition-transform">←</span> QUAY LẠI BỐN GIAN
+              </button>
+          `;
+
+          if (r.room === "rand") {
+            html += `
+              <h2 class="font-cormorant text-4xl font-bold text-jade">Ngẫu nhiên hôm nay</h2>
+              <div class="flex flex-col items-center justify-center py-12 space-y-8">
+                <!-- Interactive Tag Hanging -->
+                <div id="draw-tag-wrap" class="animate-sway flex flex-col items-center">
+                  <div class="w-[1px] h-20 bg-vermilion"></div>
+                  <button id="pick" class="wish-tag w-24 py-8 flex flex-col items-center gap-4 cursor-pointer hover:scale-105 transition-transform" aria-label="Rút một thẻ">
+                    <div class="w-8 h-8 rounded-full border border-parchment/60 flex items-center justify-center font-lora text-sm font-bold bg-lacquer/40">縁</div>
+                    <span class="vertical-rl font-sans font-bold text-sm tracking-[0.3em] uppercase">RÚT THẺ</span>
+                  </button>
+                </div>
+                <div id="out" class="w-full max-w-xl"></div>
+              </div>
+            `;
+          }
+
+          if (r.room === "rank") {
+            const ranked = [...CHARACTERS].sort((a, b) => (STORE.views[b.id] || 0) - (STORE.views[a.id] || 0));
+            html += `
+              <h2 class="font-cormorant text-4xl font-bold text-jade mb-6">Bảng Danh Vọng</h2>
+              <div class="space-y-4">
+                ${ranked.map((c, i) => `
+                  <div class="flex items-center justify-between p-4 bg-parchment border-b border-line">
+                    <div class="flex items-center gap-6">
+                      <span class="font-cormorant text-3xl font-bold ${i === 0 ? 'text-vermilion text-4xl' : 'text-g3'}">
+                        ${String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span class="font-lora font-bold text-lg text-ink">${esc(c.name)}</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                      <span class="text-xs font-sans font-semibold text-mut">${STORE.views[c.id] || 0} lượt xem</span>
+                      <button class="btn-editorial" data-open="${c.id}">XEM PROFILE</button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+              <p class="text-xs font-sans text-mut border-l-2 border-gold pl-3 py-1 mt-6">
+                Lượt xem chỉ được lưu trên trình duyệt hiện tại (mỗi nhân vật đếm tối đa 1 lần/30 phút).
+              </p>
+            `;
+          }
+
+          if (r.room === "kind") {
+            html += `
+              <h2 class="font-cormorant text-4xl font-bold text-jade">Vạn loại mục</h2>
+              <div class="relative border-b-2 border-jade py-2 mb-6">
+                <input id="tq" type="search" placeholder="Tìm kiếm hashtag..." class="w-full bg-transparent font-sans text-base focus:outline-none">
+              </div>
+              <div id="tg" class="flex flex-wrap gap-2 mb-8"></div>
+              <div id="res" class="space-y-4"></div>
+            `;
+          }
+
+          if (r.room === "mem") {
+            html += `
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                <div>
+                  <h2 class="font-cormorant text-4xl font-bold text-jade">Tơ Tình Ký</h2>
+                  <p class="font-lora italic text-sm text-mut">Những dòng hồi ức gửi gắm lại giữa rừng tre</p>
+                </div>
+                <div class="flex items-center gap-4">
+                  <select id="mf" class="bg-parchment border border-line p-2 text-xs font-sans font-semibold">
+                    <option value="">TẤT CẢ NHÂN VẬT</option>
+                    ${CHARACTERS.map(c => `<option value="${c.id}" ${r.f === c.id ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}
+                  </select>
+                  <button id="addm" class="btn-editorial btn-fill">GỬI HỒ I ỨC</button>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                ${STORE.mem.filter(m => !r.f || m.cid === r.f).map(renderMemoryCard).join('') || `
+                  <p class="col-span-full font-lora italic text-mut text-center py-12 border border-dashed border-line">
+                    Chưa có thẻ hồi ức nào. Hãy là người đầu tiên treo thẻ!
+                  </p>
+                `}
+              </div>
+            `;
+          }
+
+          html += `</section>`;
+        }
+      }
+
+      app.innerHTML = html;
+      bindEvents();
+    }
+
+    /* ===== MEMORY CARD COMPONENT ===== */
+    function renderMemoryCard(m) {
+      const c = getById(m.cid);
+      return `
+        <article class="wish-tag p-6 flex flex-col justify-between min-h-[200px] relative animate-sway">
+          <p class="font-lora italic text-sm leading-relaxed text-parchment mb-4">
+            “${esc(m.text)}”
+          </p>
+          <div class="pt-4 border-t border-parchment/20 flex items-center justify-between text-[11px] font-sans">
+            <span class="font-semibold text-gold">
+              ${c ? `<button data-open="${c.id}" class="hover:underline">${esc(c.name)}</button>` : '—'}
+            </span>
+            <div class="flex gap-2">
+              <button data-edit="${m.id}" class="hover:text-gold transition-colors">Sửa</button>
+              <button data-del="${m.id}" class="hover:text-gold transition-colors">Xóa</button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    /* ===== STRIP COMPONENT FOR HOME LIST ===== */
+    function renderStrip(c) {
+      return `
+        <div class="strip-item p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 cursor-pointer" data-open="${c.id}">
+          <div class="space-y-1">
+            <div class="flex items-center gap-3">
+              <h3 class="font-cormorant text-2xl font-bold text-jade">${esc(c.name)}</h3>
+              ${c.demo ? `<span class="text-[9px] font-bold tracking-widest px-2 py-0.5 bg-gold/20 text-gold-dark border border-gold/40 uppercase">DEMO</span>` : ''}
+            </div>
+            ${c.description ? `<p class="font-lora italic text-sm text-mut line-clamp-1">${esc(c.description)}</p>` : ''}
+          </div>
+          <div class="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+            <div class="flex gap-2">
+              ${c.hashtags.slice(0, 2).map(t => `<span class="text-[10px] font-sans px-2 py-1 bg-pine/10 text-pine font-semibold">#${esc(t.trim())}</span>`).join('')}
+            </div>
+            <span class="text-vermilion font-bold text-xl group-hover:translate-x-1 transition-transform">→</span>
+          </div>
+        </div>
+      `;
+    }
+
+    /* ===== EVENT BINDING & INTERACTIVITY ===== */
+    function bindEvents() {
+      // Global Data Go Navigation
+      document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => go({ p: b.dataset.go }));
+      document.querySelectorAll("[data-room]").forEach(b => b.onclick = () => go({ p: "discover", room: b.dataset.room }));
+      
+      // Character Open Trigger
+      document.querySelectorAll("[data-open]").forEach(b => b.onclick = () => openChar(b.dataset.open));
+      
+      // Hashtag Filtering
+      document.querySelectorAll("[data-tag]").forEach(b => b.onclick = () => go({ p: "discover", room: "kind", tag: b.dataset.tag }));
+
+      // Home Search Logic
+      const qInput = $("#q");
+      if (qInput) {
+        qInput.oninput = () => {
+          route.q = qInput.value;
+          fillHomeList();
+        };
+        fillHomeList();
+      }
+
+      // Discover Kind Search & Filter Logic
+      if (route.room === "kind") {
+        const renderTags = () => {
+          const filterVal = norm($("#tq") ? $("#tq").value : "");
+          const tgContainer = $("#tg");
+          if (!tgContainer) return;
+          
+          tgContainer.innerHTML = getAllTags()
+            .filter(t => norm(t).includes(filterVal))
+            .map(t => `
+              <button class="text-xs font-sans px-3 py-1.5 border ${norm(t) === norm(route.tag) ? 'bg-jade text-parchment border-jade' : 'border-line text-ink hover:border-jade'}" data-pick="${esc(t)}">
+                #${esc(t)}
+              </button>
+            `).join('');
+
+          document.querySelectorAll("[data-pick]").forEach(b => {
+            b.onclick = () => {
+              route.tag = norm(b.dataset.pick) === norm(route.tag) ? "" : b.dataset.pick;
+              render();
+            };
+          });
+        };
+
+        if ($("#tq")) $("#tq").oninput = renderTags;
+        renderTags();
+        fillHomeList();
+      }
+
+      // Fortune Random Draw Logic
+      const pickBtn = $("#pick");
+      if (pickBtn) {
+        pickBtn.onclick = () => {
+          if (!CHARACTERS.length) return;
+          const randomChar = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)];
+          const imgUrl = safeUrl(randomChar.avatarUrl);
+          
+          const tagWrap = $("#draw-tag-wrap");
+          if (tagWrap) {
+            tagWrap.classList.remove("animate-swing");
+            void tagWrap.offsetWidth; // Trigger Reflow
+            tagWrap.classList.add("animate-swing");
+          }
+
+          setTimeout(() => {
+            $("#out").innerHTML = `
+              <div class="profile-plaque p-6 rounded-sm text-parchment animate-fade-in mt-6">
+                <div class="flex flex-col sm:flex-row items-center gap-6">
+                  <div class="w-32 h-40 border border-gold p-1 bg-jade flex-shrink-0">
+                    ${imgUrl 
+                      ? `<img src="${esc(imgUrl)}" alt="${esc(randomChar.name)}" class="w-full h-full object-cover">`
+                      : `<div class="w-full h-full flex items-center justify-center font-lora italic text-[10px] text-center p-2 text-mist">Chưa có ảnh</div>`
+                    }
+                  </div>
+                  <div class="space-y-3 text-center sm:text-left">
+                    <span class="text-[10px] font-bold tracking-widest text-gold uppercase">KẾT QUẢ RÚT THẺ</span>
+                    <h3 class="font-cormorant text-4xl font-bold">${esc(randomChar.name)}</h3>
+                    <p class="font-lora italic text-sm text-mist/80">${esc(randomChar.description || '')}</p>
+                    <div class="pt-2 flex justify-center sm:justify-start gap-3">
+                      <button class="btn-editorial btn-fill" data-open="${randomChar.id}">XEM PROFILE</button>
+                      <button class="btn-editorial" id="draw-again">RÚT LẠI</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+            bindEvents();
+            if ($("#draw-again")) $("#draw-again").onclick = pickBtn.onclick;
+          }, 600);
+        };
+      }
+
+      // Memory Handlers
+      const addMemBtn = $("#addm");
+      if (addMemBtn) addMemBtn.onclick = () => openMemoryModal();
+      
+      const addMemCharBtn = $("#addm-char");
+      if (addMemCharBtn) addMemCharBtn.onclick = () => openMemoryModal(null, route.id);
+
+      const memFilter = $("#mf");
+      if (memFilter) {
+        memFilter.onchange = () => {
+          route.f = memFilter.value;
+          render();
+        };
+      }
+
+      document.querySelectorAll("[data-del]").forEach(b => {
+        b.onclick = () => {
+          if (confirm("Bạn có chắc chắn muốn gỡ thẻ hồi ức này?")) {
+            STORE.mem = STORE.mem.filter(m => m.id !== b.dataset.del);
+            saveStore();
+            render();
+          }
+        };
+      });
+
+      document.querySelectorAll("[data-edit]").forEach(b => {
+        b.onclick = () => {
+          const targetMem = STORE.mem.find(m => m.id === b.dataset.edit);
+          if (targetMem) openMemoryModal(targetMem);
+        };
+      });
+    }
+
+    function fillHomeList() {
+      const resEl = $("#res");
+      if (!resEl) return;
+      const filtered = filterList(route.q, route.tag);
+      
+      resEl.innerHTML = (route.tag ? `
+        <div class="flex items-center gap-2 mb-4">
+          <span class="text-xs font-sans text-mut">Đang lọc theo tag: <strong>#${esc(route.tag)}</strong></span>
+          <button class="text-xs text-vermilion font-bold hover:underline" id="clear-tag">✕ Xóa lọc</button>
+        </div>
+      ` : '') + (filtered.map(renderStrip).join('') || `<p class="font-lora italic text-mut text-center py-12">Không tìm thấy hồ sơ nào khớp với từ khóa.</p>`);
+
+      document.querySelectorAll("[data-open]").forEach(b => b.onclick = () => openChar(b.dataset.open));
+      const clearBtn = $("#clear-tag");
+      if (clearBtn) clearBtn.onclick = () => { route.tag = ""; render(); };
+    }
+
+    function openChar(id) {
+      const now = Date.now();
+      if (!STORE.seen[id] || now - STORE.seen[id] > 1800000) { // 30 mins cooldown
+        STORE.views[id] = (STORE.views[id] || 0) + 1;
+        STORE.seen[id] = now;
+        saveStore();
+      }
+      go({ p: "char", id });
+    }
+
+    /* ===== MEMORY MODAL CONTROLLER ===== */
+    let currentEditingMem = null;
+    const dlg = $("#dlg");
+
+    function openMemoryModal(mem = null, defaultCharId = null) {
+      currentEditingMem = mem;
+      const sel = $("#msel");
+      sel.innerHTML = CHARACTERS.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('');
+      
+      if (mem) sel.value = mem.cid;
+      else if (defaultCharId) sel.value = defaultCharId;
+
+      $("#mtxt").value = mem ? mem.text : "";
+      dlg.showModal();
+    }
+
+    $("#mno").onclick = () => dlg.close();
+    $("#myes").onclick = () => {
+      const txt = $("#mtxt").value.trim();
+      if (!txt || !CHARACTERS.length) return;
+
+      if (currentEditingMem) {
+        currentEditingMem.text = txt;
+        currentEditingMem.cid = $("#msel").value;
+      } else {
+        STORE.mem.unshift({
+          id: "m" + Date.now(),
+          cid: $("#msel").value,
+          text: txt,
+          at: Date.now()
+        });
+      }
+      saveStore();
+      dlg.close();
+      render();
+    };
+
+    /* ===== DRAWER NAVIGATION TOGGLE ===== */
+    const nav = $("#nav");
+    const navBackdrop = $("#nav-backdrop");
+    
+    function toggleNav(open) {
+      if (open) {
+        nav.classList.remove("-translate-x-full");
+        navBackdrop.classList.remove("opacity-0", "pointer-events-none");
+        $("#menu").setAttribute("aria-expanded", "true");
+      } else {
+        nav.classList.add("-translate-x-full");
+        navBackdrop.classList.add("opacity-0", "pointer-events-none");
+        $("#menu").setAttribute("aria-expanded", "false");
+      }
+    }
+
+    $("#menu").onclick = () => toggleNav(true);
+    $("#close").onclick = () => toggleNav(false);
+    navBackdrop.onclick = () => toggleNav(false);
+
+    nav.querySelectorAll(".nav-it").forEach(b => {
+      b.onclick = () => {
+        toggleNav(false);
+        go({ p: b.dataset.go });
+      };
+    });
+
+    window.addEventListener("keydown", e => {
+      if (e.key === "Escape") toggleNav(false);
+    });
+
+    /* ===== GATE ENTER ACTION ===== */
+    $("#enter").onclick = () => {
+      $("#tw").classList.add("animate-swing");
+      setTimeout(() => {
+        $("#gate").classList.add("opacity-0", "pointer-events-none");
+      }, 700);
+    };
+
+    /* INITIALIZATION */
+    render();
+  </script>
+</body>
+</html>
